@@ -4,38 +4,66 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Build AOCODARCH7DUAL",
+            "label": "CMAKE Update",
             "type": "shell",
-            "command": "make AOCODARCH7DUAL",
+            "command": "cmake -B${config:BUILD_DIR}",
             "group": "build",
             "problemMatcher": [],
-            "options": {
-                "cwd": "${workspaceFolder}/build"
-            }
         },
         {
-            "label": "Build AOCODARCH7DUAL",
+            "label": "build",
             "type": "shell",
-            "command": "make AOCODARCH7DUAL",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "${config:BUILD_DIR}",
+                "--",
+                "${config:TARGET}"
+            ],
+            "problemMatcher": "$gcc",
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
-            "problemMatcher": [],
-            "options": {
-                "cwd": "${workspaceFolder}/build"
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
             }
-        }
-        ,
+        },
         {
-            "label": "CMAKE Update",
+            "label": "svd",
             "type": "shell",
-            "command": "cmake ..",
-            "group": "build",
-            "problemMatcher": [],
-            "options": {
-                "cwd": "${workspaceFolder}/build"
-            }
+            "command": "cmake",
+            "args": [
+                "--build",
+                "${config:BUILD_DIR}",
+                "--",
+                "svd_${config:TARGET}"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "openocd-cfg",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "${config:BUILD_DIR}",
+                "--",
+                "openocd_cfg_${config:TARGET}"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "debug-prepare",
+            "type": "shell",
+            "dependsOn": [
+                "svd",
+                "openocd-cfg",
+                "build"
+            ],
+            "problemMatcher": []
         }
     ]
 }

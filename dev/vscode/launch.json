@@ -21,8 +21,8 @@
             "configFiles": [
                 "${config:BUILD_DIR}/openocd/${config:TARGET}.cfg"
             ],
-            "preLaunchTask": "openocd-debug-prepare",
-            "svdFile": "${config:BUILD_DIR}/svd/${config:TARGET}.svd",
+            "preLaunchTask": "debug-prepare",
+            "svdFile": "${config:BUILD_DIR}/svd/${config:TARGET}.svd"
         }
     ]
 }
