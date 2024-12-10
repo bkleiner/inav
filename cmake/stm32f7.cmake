@@ -112,6 +112,7 @@ macro(define_target_stm32f7 subfamily size)
         set(func_ARGV ARGV)
         string(TOUPPER ${size} upper_size)
         get_stm32_flash_size(flash_size ${size})
+        string(SUBSTRING ${subfamily} 1 1 svd_subfamily)
         if(flash_size GREATER 512)
             set(opt -O2)
         else()
@@ -129,8 +130,8 @@ macro(define_target_stm32f7 subfamily size)
             COMPILE_DEFINITIONS ${definitions}
             LINKER_SCRIPT stm32_flash_f7${subfamily}x${size}
             OPTIMIZATION ${opt}
-
             ${${func_ARGV}}
+            SVD STM32F7x${svd_subfamily}
         )
     endfunction()
 endmacro()
